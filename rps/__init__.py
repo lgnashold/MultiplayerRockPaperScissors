@@ -32,4 +32,7 @@ def create_app(test_config=None):
     from . import db
     db.init_app(app) 
 
+    from . import matchmaking
+    app.register_blueprint(matchmaking.bp)
+
     return app
