@@ -25,6 +25,7 @@ def index():
             )
             db.commit()
             session["join_code"] = join_code
+            print(session["join_code"])
             redirect(url_for('game.run_game'))
 
         else:
