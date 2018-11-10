@@ -9,7 +9,7 @@ bp = Blueprint('game', __name__)
 def run_game():
     print("this runs")
     if session["join_code"] != None :
-        return render_template("game.html", join_code = session["join_code"])
+        return render_template("game.html", join_code = session["join_code"], nickname = session["nickname"])
     else:
         return redirect(url_for(index))
 
