@@ -1,7 +1,9 @@
 import os
 
 from flask import Flask
+from flask_socketio import SocketIO
 
+socketio = SocketIO()
 
 def create_app(test_config=None):
     # create and configure the app
@@ -38,7 +40,10 @@ def create_app(test_config=None):
     from . import matchmaking
     app.register_blueprint(matchmaking.bp)
 
+
     from . import game
     app.register_blueprint(game.bp)
 
+
+    socketio.init_app(app)
     return app
