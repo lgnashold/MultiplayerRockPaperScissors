@@ -32,7 +32,7 @@ def move_input(choice):
             colname ="move2"
          
     if(colname != None):
-        db.execute("UPDATE game SET (?) = (?) WHERE joincode = (?)", (colname, choice["data"], join_code))
+        db.execute("UPDATE game SET "+colname+" = :choice WHERE joincode = :jc", {"choice": choice["data"], "jc":join_code})
         db.commit()
 
 

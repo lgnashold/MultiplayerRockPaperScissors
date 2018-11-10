@@ -4,7 +4,7 @@ CREATE TABLE game (
 	id INTEGER PRIMARY KEY AUTOINCREMENT,
 	joincode TEXT UNIQUE,
 	name1 TEXT,
-	move1 INTEGER,
+	move1 TEXT,
 	name2 TEXT,
-	move2 INTEGER
+	move2 TEXT 
 );
