@@ -2,6 +2,9 @@ from flask import (
     Blueprint, flash, g, redirect, render_template, request, session, url_for
 )
 from . import socketio
+
+from flask_socketio import emit
+
 from rps.db import get_db
 bp = Blueprint('game', __name__)
 
@@ -27,9 +30,13 @@ def move_input(choice):
     if(result["name1"] == nickname):
         if(result["move1"] == None):
             colname = "move1"
+            emit('response', {'data': nickname + ' made move.'})
+
     elif(result["name2"] == nickname):
         if(result["name2"] == None):
             colname ="move2"
+            emit('response', {'data': nickname + ' made move.'})
+
 
     if(colname != None):
         db.execute("UPDATE game SET "+colname+" = :choice WHERE joincode = :jc", {"choice": choice["data"], "jc":join_code})
