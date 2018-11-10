@@ -2,13 +2,29 @@
 <html>
   <head>
     <title> Home </title>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <script src = "https://cdnjs.cloudflare.com/ajax/libs/socket.io/2.1.1/socket.io.dev.js"> </script>
   </head>
   <body>
     <p>Welcom to your game: {{join_code}}</p>
 
-    <button>ROCK</button>
-    <button>PAPER</button>
-    <button>SCISSORS</button>
+    <button onclick = "move('rock')">ROCK</button>
+    <button onclick = "move('paper')">PAPER</button>
+    <button onclick = "move('scissors')">SCISSORS</button>
+
+    <p id = "log"> </p>
+    <script>
+      var socket = io.connect();
+      socket.on('response', function(msg) {
+          $('#log').append('<p>Received: ' + msg.data + '</p>');
+      });
+
+      function move(type) {
+          socket.emit('made_move', {data: type});
+          return false;
+      }
+
+    </script>
 
   </body>
 </html>
