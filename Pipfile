@@ -9,6 +9,7 @@ flask-socketio = "*"
 gevent-websocket = "*"
 rps = {path = "."}
 wheel = "*"
+gunicorn = "*"
 
 [dev-packages]
 
