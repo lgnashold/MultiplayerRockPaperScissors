@@ -14,9 +14,7 @@ def index():
 
         db = get_db()
 
-        game_result = db.execute('SELECT id,name1,name2 FROM game WHERE joincode = ?', (join_code,)).fetchone()
-
-        print(game_result)
+        game_result = db.execute('SELECT name1,name2,joincode FROM game WHERE joincode = ?', (join_code,)).fetchone()
 
         if game_result is None:
             #create new game
@@ -25,13 +23,11 @@ def index():
             )
             db.commit()
             session["join_code"] = join_code
-            print(session["join_code"])
-            redirect(url_for('game.run_game'))
+            print(url_for('game.run_game'))
+            return redirect(url_for('game.run_game'))
 
         else:
             #join exsisting game
-            print(game_result["name1"])
-            print(game_result["name2"])
             if game_result["name2"] != None:
                 print("SORRY PAL. GAME IS FULL");
             else:
@@ -40,7 +36,7 @@ def index():
                 )
                 db.commit()
                 session["join_code"] = game_result["joincode"]
-                redirect(url_for('game.run_game'))
+                return redirect(url_for('game.run_game'))
 
 
     return render_template("index.html")
