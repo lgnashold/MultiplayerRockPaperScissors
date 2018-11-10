@@ -6,7 +6,7 @@
     <script src = "https://cdnjs.cloudflare.com/ajax/libs/socket.io/2.1.1/socket.io.dev.js"> </script>
   </head>
   <body>
-    <p>Welcom to your game: {{join_code}}</p>
+    <p>Welcome to game: {{join_code}} Name: {{nickname}}</p>
 
     <button onclick = "move('rock')">ROCK</button>
     <button onclick = "move('paper')">PAPER</button>
@@ -20,7 +20,7 @@
       });
 
       function move(type) {
-          socket.emit('made_move', {data: type, name: "{{nickname}}" });
+          socket.emit('made_move', {data: type});
           return false;
       }
 
