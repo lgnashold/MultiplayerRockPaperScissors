@@ -24,9 +24,22 @@ def index():
                 'INSERT INTO game (joincode,name1) VALUES (?,?)',(join_code,nickname)
             )
             db.commit()
+            session["join_code"] = join_code
+            redirect(url_for('game.run_game'))
 
         else:
             #join exsisting game
-            pass
+            print(game_result["name1"])
+            print(game_result["name2"])
+            if game_result["name2"] != None:
+                print("SORRY PAL. GAME IS FULL");
+            else:
+                db.execute(
+                    'UPDATE game SET name2 = (?) WHERE joincode = (?)',(nickname,join_code)
+                )
+                db.commit()
+                session["join_code"] = game_result["joincode"]
+                redirect(url_for('game.run_game'))
+
 
     return render_template("index.html")
