@@ -23,7 +23,7 @@ def index():
             )
             db.commit()
             session["join_code"] = join_code
-            session["user"] = nickname
+            session["nickname"] = nickname
 
             print(url_for('game.run_game'))
             return redirect(url_for('game.run_game'))
@@ -38,7 +38,7 @@ def index():
                 )
                 db.commit()
                 session["join_code"] = game_result["joincode"]
-                session["user"] = nickname
+                session["nickname"] = nickname
                 return redirect(url_for('game.run_game'))
 
 
