@@ -7,7 +7,8 @@ name = "pypi"
 flask = "*"
 flask-socketio = "*"
 gevent-websocket = "*"
-gunicorn = "*"
+rps = {path = "."}
+wheel = "*"
 
 [dev-packages]
 
