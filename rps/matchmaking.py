@@ -11,7 +11,7 @@ def index():
     if request.method == "POST":
         db = get_db()
         db.execute(
-            'INSERT INTO game'
+            'INSERT INTO game (move1,move2) VALUES (?,?)',(0,0)
         )
         db.commit()
 
