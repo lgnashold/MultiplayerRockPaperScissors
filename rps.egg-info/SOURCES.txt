@@ -1,0 +1,12 @@
+MANIFEST.in
+setup.py
+rps/__init__.py
+rps/db.py
+rps/game.py
+rps/matchmaking.py
+rps.egg-info/PKG-INFO
+rps.egg-info/SOURCES.txt
+rps.egg-info/dependency_links.txt
+rps.egg-info/not-zip-safe
+rps.egg-info/requires.txt
+rps.egg-info/top_level.txt
