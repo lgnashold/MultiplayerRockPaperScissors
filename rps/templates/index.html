@@ -4,10 +4,13 @@
     <title> Home </title>
   </head>
   <body>
-    <p> Welcome to Rock Paper Scissors Online!!!</p>
+    <p> Welcome to Rock Paper Scissors Online!!! Make or join game.</p>
     <form method="post">
-      <input type="submit" value="Create">
+      <label for="join_code">Join Code</label>
+      <input name="join_code" id="join_code" required>
+      <label for="nickname">Nickname</label>
+      <input name="nickname" id="nickname" required>
+      <input type="submit" value="Enter Game!">
     </form>
-    <a href = "{{url_for('matchmaking.join')}}">Join a Game </a>
   </body>
 </html>
