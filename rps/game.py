@@ -34,3 +34,29 @@ def move_input(choice):
     if(colname != None):
         db.execute("UPDATE game SET "+colname+" = :choice WHERE joincode = :jc", {"choice": choice["data"], "jc":join_code})
         db.commit()
+        evaluate_game(join_code)
+    
+def evaluate_game(join_code):
+    #Fetch Game
+    db = get_db()
+    result = db.execute("SELECT name1, move1, name2, move2 FROM game WHERE joincode = ?",(join_code,)).fetchone()
+    
+    move1 = result["move1"]
+    move2 = result["move2"]
+    
+    
+    #If both moves are full, emit messages
+    if(move1 != None and move2 != None):
+        msg = result["name1"] + " played " + move1 + ", " + result["name2"] + " played " + move2 +". "
+        if(move1 == move2):
+            msg += "It's a tie!"
+        elif( (move1 == "paper" and move2 == "rock") or (move1 == "scissors" and move2 == "paper") or (move1 == "rock" and move2 == "scissors")):
+            msg += results[name1] + " won!!"
+        else:
+            msg += results[name2] + " won!!"
+        db.execute("UPDATE game set move1 = NULL, move2 = NULL WHERE joincode = (?)", (join_code,))
+        db.commit()
+
+        emit("response", {"data":msg})
+            
+
