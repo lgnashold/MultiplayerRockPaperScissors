@@ -18,9 +18,9 @@ def run_game():
 
 @socketio.on("made_move")
 def move_input(choice):
-    print(choice)
     nickname = session["nickname"]
     join_code = session["join_code"]
+    print("name: "+nickname + " code :"+join_code+" choice: "+choice["data"])
     db = get_db()
 
     # Fetches game row
@@ -30,12 +30,12 @@ def move_input(choice):
     if(result["name1"] == nickname):
         if(result["move1"] == None):
             colname = "move1"
-            emit('response', {'data': nickname + ' made move.'})
+            emit('response', {'data': nickname + ' made move.'}, broadcast = True)
 
     elif(result["name2"] == nickname):
-        if(result["name2"] == None):
+        if(result["move2"] == None):
             colname ="move2"
-            emit('response', {'data': nickname + ' made move.'})
+            emit('response', {'data': nickname + ' made move.'}, broadcast = True)
 
 
     if(colname != None):
@@ -58,12 +58,12 @@ def evaluate_game(join_code):
         if(move1 == move2):
             msg += "It's a tie!"
         elif( (move1 == "paper" and move2 == "rock") or (move1 == "scissors" and move2 == "paper") or (move1 == "rock" and move2 == "scissors")):
-            msg += results[name1] + " won!!"
+            msg += result["name1"] + " won!!"
         else:
-            msg += results[name2] + " won!!"
+            msg += result["name2"] + " won!!"
         db.execute("UPDATE game set move1 = NULL, move2 = NULL WHERE joincode = (?)", (join_code,))
         db.commit()
 
-        emit("response", {"data":msg})
+        emit("response", {"data":msg}, broadcast = True)
             
 
