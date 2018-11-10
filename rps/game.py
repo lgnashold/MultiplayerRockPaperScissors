@@ -53,16 +53,17 @@ def test_disconnect():
     result = db.execute("SELECT name1,move1,name2,move2 FROM game WHERE joincode = ?", (join_code,)).fetchone()
     colname = None
 
-    if(result["name1"] == nickname):
-        if(result["move1"] == None):
-            colname = "name1"
-    elif(result["name2"] == nickname):
-        if(result["move2"] == None):
-            colname ="name2"
+    if(result != None):
+        if(result["name1"] == nickname):
+            if(result["move1"] == None):
+                colname = "name1"
+        elif(result["name2"] == nickname):
+            if(result["move2"] == None):
+                colname ="name2"
 
-    if(colname != None):
-        db.execute("UPDATE game SET "+colname+" = NULL WHERE joincode = :jc", {"jc":join_code})
-        db.commit()
+        if(colname != None):
+            db.execute("UPDATE game SET "+colname+" = NULL WHERE joincode = :jc", {"jc":join_code})
+            db.commit()
 
     check_empty(join_code)
 
