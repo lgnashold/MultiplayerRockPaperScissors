@@ -18,8 +18,8 @@ def move_input(choice):
     print(choice)
     nickname = session["nickname"]
     join_code = session["join_code"]
-    db = get_db() 
-    
+    db = get_db()
+
     # Fetches game row
     result = db.execute("SELECT name1,move1,name2,move2 FROM game WHERE joincode = ?", (join_code,)).fetchone()
     colname = None
@@ -30,9 +30,7 @@ def move_input(choice):
     elif(result["name2"] == nickname):
         if(result["name2"] == None):
             colname ="move2"
-         
+
     if(colname != None):
         db.execute("UPDATE game SET "+colname+" = :choice WHERE joincode = :jc", {"choice": choice["data"], "jc":join_code})
         db.commit()
-
-
