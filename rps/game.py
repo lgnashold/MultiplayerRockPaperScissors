@@ -2,7 +2,7 @@ from flask import (
     Blueprint, flash, g, redirect, render_template, request, session, url_for
 )
 from . import socketio
-from . import db.get_db
+from rps.db import get_db
 bp = Blueprint('game', __name__)
 
 @bp.route("/game", methods = ('GET','POST'))
@@ -16,6 +16,23 @@ def run_game():
 @socketio.on("made_move")
 def move_input(choice):
     print(choice)
-    name = session["name"]
-    game = session["join_code"]
+    nickname = session["nickname"]
+    join_code = session["join_code"]
     db = get_db() 
+    
+    # Fetches game row
+    result = db.execute("SELECT name1,move1,name2,move2 FROM game WHERE joincode = ?", (join_code,)).fetchone()
+    colname = None
+
+    if(result["name1"] == nickname):
+        if(result["move1"] == None):
+            colname = "move1"
+    elif(result["name2"] == nickname):
+        if(result["name2"] == None):
+            colname ="move2"
+         
+    if(colname != None):
+        db.execute("UPDATE game SET (?) = (?) WHERE joincode = (?)", (colname, choice["data"], join_code))
+        db.commit()
+
+
