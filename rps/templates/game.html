@@ -20,7 +20,7 @@
       });
 
       function move(type) {
-          socket.emit('made_move', {data: type, name: {{nickname}} });
+          socket.emit('made_move', {data: type, name: "{{nickname}}" });
           return false;
       }
 
